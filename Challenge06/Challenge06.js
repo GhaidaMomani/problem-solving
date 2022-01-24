@@ -13,8 +13,8 @@ const findMax = (arr)=>{
     let max=arr[0];
     // write your code here 
     for (let i=1; i<arr.length; i++) {
-        if (arr[i] > maximum) {
-            max = t[i];   
+        if (arr[i] > max) {
+            max = arr[i];   
         }}
     return max;
 
@@ -36,7 +36,7 @@ const sumNums = (arr)=>{
         sum += array[i]
     return sum;
 }
-
+}
 // 3) ---------------------
 // 
 //  using the (reverseArray) function; return provided array reversed
@@ -46,12 +46,13 @@ const sumNums = (arr)=>{
 // 
 // ------------------------
 const reverseArray = (arr)=>{
-    let rev= new Array [arr.length];
+/*   let rev= new Array [arr.length];
     for (let i = 0; i < arr.length; i++){
         for (let j = arr.length-1; j =0; j--) 
         rev[j]=arr[i];
        
     }
+    return rev;*/
 }
 
 module.exports = {findMax , sumNums, reverseArray};
