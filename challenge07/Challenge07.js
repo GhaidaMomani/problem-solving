@@ -23,7 +23,7 @@ const objLat = (obj) => {
   let fname = obj.firstName[0].toUpperCase() + obj.firstName.substring(1);
   let lname = obj.lastName[0].toUpperCase() + obj.lastName.substring(1);
 
-  return "my name is ${fname} ${lname} I am ${obj.age} YO, and I love ${obj.hobby}.";
+  return "my name is `${fname} ${lname}` I am `${obj.age}` YO, and I love `${obj.hobby}`.";
 };
 
 // 2) ---------------------
