@@ -18,12 +18,10 @@
 
 // ------------------------
 
-const objLat = (obj) => {
-  // write your code here
-  let fname = obj.firstName[0].toUpperCase() + obj.firstName.substring(1);
-  let lname = obj.lastName[0].toUpperCase() + obj.lastName.substring(1);
-
-  return "my name is `${fname} ${lname}` I am `${obj.age}` YO, and I love `${obj.hobby}`.";
+const objLat = ({ firstName, lastName, age, hobby }) => {
+  const first = firstName.charAt(0).toUpperCase() + firstName.slice(1)
+  const last = lastName.charAt(0).toUpperCase() + lastName.slice(1)
+  return (`my name is ${first} ${last} I am ${age} YO, and I love ${hobby}.`)
 };
 
 // 2) ---------------------
@@ -86,19 +84,9 @@ const objLat = (obj) => {
 //  2- If one of the names is null dont add it to the full name
 
 // ------------------------
-const cvFormatter = (arr) => {
-  return arr
-    .filter((obj) => obj.yearsOfExperience > 1)
-    .map((obj) => {
-      let fname = obj.firstName
-        ? obj.lastName
-          ? obj.firstName + obj.lastName
-          : obj.firstName
-        : obj.lastName;
-
-      return { fullName: fname, tech: obj.tech };
-    });
-};
+const cvFormatter = (arr) => (
+  arr.filter(cv => cv.yearsOfExperience > 1).map(cv => ({ fullName: `${cv.firstName}${cv.lastName ? ` ${cv.lastName}` : ""}`, tech: cv.tech }))
+);
 
 // 3) ---------------------
 //
@@ -120,39 +108,14 @@ const cvFormatter = (arr) => {
 //  1- rejectedApplicants are applications that has both the names empty or null and whoever have less than one year of Experience
 
 // ------------------------
-const applicationsStatics = (arr) => {
-  // write your code here
-  let pythonCount = 0;
-  let javaScriptCount = 0;
-  let dotNetCount = 0;
-  let javaCount = 0;
-
-  let farr = arr.filter(
-    (obj) =>
-      obj.firstName !== null ||
-      obj.firstName !== "" ||
-      ((obj.lastName !== null || obj.lastName !== "") &&
-        obj.yearsOfExperience > 1)
-  );
-
-  farr.forEach((obj) => {
-    pythonCount += obj.tech === "Python" ? 1 : 0;
-    javaScriptCount += obj.tech === "JS" ? 1 : 0;
-    dotNetCount += obj.tech === ".Net" ? 1 : 0;
-    javaCount += obj.tech === "Java" ? 1 : 0;
-  });
-
-  return {
-    python_Devs: pythonCount,
-    javaScript_Devs: javaScriptCount,
-    dotNet_Devs: dotNetCount,
-    java_Devs: javaCount,
-    totalApplicants: arr.length, 
-    rejectedApplicants: arr.length - farr.length,
-  };
-
-  
-};
+const applicationsStatics = (arr) => ({
+  python_Devs: arr.filter(cv => cv.tech === "Python").length,
+  javaScript_Devs: arr.filter(cv => cv.tech === "JS").length,
+  dotNet_Devs: arr.filter(cv => cv.tech === ".Net").length,
+  java_Devs: arr.filter(cv => cv.tech === "Java").length,
+  totalApplicants: arr.length,
+  rejectedApplicants: arr.filter(cv => cv.yearsOfExperience < 1 || !(cv.firstName && cv.lastName)).length
+});
 
 // 4) ---------------------
 //
@@ -174,21 +137,25 @@ let data = {
         {
           avg: 0,
           classNumber: "01",
-          classScores: [89, 87, 45, 48, 89, 65, 21, 54, 78, 62, 51, 54, 50, 49],
+          classScores: [
+            89, 87, 45, 48, 89, 65, 21, 54, 78, 62, 51, 54, 50, 49
+          ]
         },
         {
           avg: 0,
           classNumber: "02",
           classScores: [
-            87, 54, 95, 45, 41, 51, 25, 63, 58, 47, 64, 51, 98, 100,
-          ],
+            87, 54, 95, 45, 41, 51, 25, 63, 58, 47, 64, 51, 98, 100
+          ]
         },
         {
           avg: 0,
           classNumber: "03",
-          classScores: [74, 85, 20, 51, 59, 58, 62, 71, 74, 99, 84, 71, 38, 70],
+          classScores: [
+            74, 85, 20, 51, 59, 58, 62, 71, 74, 99, 84, 71, 38, 70
+          ]
         },
-      ],
+      ]
     },
     {
       grade: "Second",
@@ -197,14 +164,18 @@ let data = {
         {
           avg: 0,
           classNumber: "01",
-          classScores: [71, 82, 86, 3, 1, 52, 91, 84, 44, 68, 64, 23, 80, 60],
+          classScores: [
+            71, 82, 86, 3, 1, 52, 91, 84, 44, 68, 64, 23, 80, 60,
+          ]
         },
         {
           avg: 0,
           classNumber: "02",
-          classScores: [86, 39, 71, 17, 61, 76, 60, 54, 42, 65, 49, 75, 96, 70],
+          classScores: [
+            86, 39, 71, 17, 61, 76, 60, 54, 42, 65, 49, 75, 96, 70
+          ]
         },
-      ],
+      ]
     },
     {
       grade: "Third",
@@ -213,14 +184,18 @@ let data = {
         {
           avg: 0,
           classNumber: "01",
-          classScores: [11, 12, 28, 78, 57, 3, 54, 72, 14, 19, 88, 74, 68, 58],
+          classScores: [
+            11, 12, 28, 78, 57, 3, 54, 72, 14, 19, 88, 74, 68, 58
+          ]
         },
         {
           avg: 0,
           classNumber: "02",
-          classScores: [62, 8, 35, 43, 96, 9, 97, 73, 4, 32, 18, 81, 70, 42],
+          classScores: [
+            62, 8, 35, 43, 96, 9, 97, 73, 4, 32, 18, 81, 70, 42
+          ]
         },
-      ],
+      ]
     },
     {
       grade: "Forth",
@@ -229,38 +204,52 @@ let data = {
         {
           avg: 0,
           classNumber: "01",
-          classScores: [63, 71, 93, 87, 83, 85, 67, 49, 62, 45, 38, 48, 58, 52],
+          classScores: [
+            63, 71, 93, 87, 83, 85, 67, 49, 62, 45, 38, 48, 58, 52
+          ]
         },
         {
           avg: 0,
           classNumber: "02",
           classScores: [
-            100, 45, 70, 75, 87, 63, 39, 46, 54, 68, 74, 96, 52, 49,
-          ],
+            100, 45, 70, 75, 87, 63, 39, 46, 54, 68, 74, 96, 52, 49
+          ]
         },
         {
           avg: 0,
           classNumber: "03",
-          classScores: [97, 54, 80, 95, 69, 31, 88, 84, 50, 81, 67, 34, 41, 87],
+          classScores: [
+            97, 54, 80, 95, 69, 31, 88, 84, 50, 81, 67, 34, 41, 87
+          ]
         },
         {
           avg: 0,
           classNumber: "04",
           classScores: [
-            64, 96, 66, 38, 78, 58, 43, 100, 34, 56, 82, 53, 89, 72,
-          ],
+            64, 96, 66, 38, 78, 58, 43, 100, 34, 56, 82, 53, 89, 72
+          ]
         },
-      ],
+      ]
     },
   ],
 };
 
 //  Note that:
 //  1- This is not the exact data you will be getting every time and the solution should be dynamic
-//  2- You need to round the average to the nearest lower number
+//  2- You need to round the average to the nearest lower number 
 
-const classesAvg = (data) => {
-  // write your code here
-};
+const classesAvg = (data) => ({
+  SchoolName: data.SchoolName,
+  Capacity: data.Capacity,
+  grades: data.grades.map(grade => ({
+    grade: grade.grade,
+    numberOFClasses: grade.numberOFClasses,
+    classes: grade.classes.map(clas => ({
+      avg: Math.floor(clas.classScores.reduce((a, b) => a + b) / clas.classScores.length),
+      classNumber: clas.classNumber,
+      classScores: clas.classScores
+    })),
+  }))
+});
 
 module.exports = { objLat, cvFormatter, applicationsStatics, classesAvg };
